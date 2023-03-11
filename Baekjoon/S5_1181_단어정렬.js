@@ -1,47 +1,34 @@
-const readline = require("readline");
-
-const rl = readline.createInterface({
+const rl = require('readline').createInterface({
   input: process.stdin,
   output: process.stdout,
 });
 
 const readlines = [];
-let input; // same as python's.
+let input;
 
-rl.on("line", function (line) {
-  readlines.push(line);
-});
-rl.on("close", function () {
+rl.on('line', (line) => readlines.push(line));
+rl.on('close', () => {
   const input_generator = input_generator_constructor(readlines);
-  input = () => {
-    return input_generator.next().value;
-  };
+  input = () => input_generator.next().value;
   main();
   process.exit();
 });
 
 function* input_generator_constructor(readlines) {
-  for (const line of readlines) {
-    yield line;
-  }
+  for (const line of readlines) yield line;
 }
 
-// -----------[MAIN LOGIC]---------------------------------------
+// -----------[MAIN LOGIC HERE]---------------------------------------
 function main() {
-  const N = input();
+  const N = +input();
   const strings_set = new Set();
 
   for (let i = 0; i < N; i++) {
     strings_set.add(input());
   }
 
-  [...strings_set]
-    .sort((a, b) => {
-      if (a.length === b.length) {
-        return a < b ? -1 : 1;
-      } else {
-        return a.length - b.length;
-      }
-    })
-    .forEach((str) => console.log(str));
+  const answer = [...strings_set] //
+    .sort((a, b) => (a.length === b.length ? (a < b ? -1 : 1) : a.length - b.length))
+    .join('\n');
+  console.log(answer);
 }
