@@ -1,5 +1,5 @@
-const platform = 0; // 0: Mine, 1: Baekjoon
-const filePath = platform === 1 ? '/dev/stdin' : './input.txt';
+const filePath =
+  process.env.PWD !== '/workspace/node-backend/problem-solving' ? '/dev/stdin' : './input.txt';
 const readlines = require('fs').readFileSync(filePath).toString().trim().split('\n');
 const generator = input_generator_constructor(readlines);
 const input = () => generator.next().value;
