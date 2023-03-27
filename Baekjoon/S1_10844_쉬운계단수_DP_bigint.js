@@ -14,7 +14,7 @@ function main() {
   const dp = Array.from({ length: 10 }, () => Array(100).fill(0n));
   for (let r = 1; r <= 9; r++) dp[r][0] = 1n;
 
-  for (let col = 1; col <= 99; col++) {
+  for (let col = 1; col <= N - 1; col++) {
     for (let row = 0; row <= 9; row++) {
       dp[row][col] += row >= 1 ? dp[row - 1][col - 1] : 0n;
       dp[row][col] += row <= 8 ? dp[row + 1][col - 1] : 0n;
