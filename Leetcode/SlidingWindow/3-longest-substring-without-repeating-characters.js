@@ -3,7 +3,9 @@
  * @return {number}
  */
 var lengthOfLongestSubstring = function(s) {
-    // 94ms, Beats 35.74%. 새로운 풀이 도전해보자.
+    // 59ms, Beats 96.80%.
+    // for of Map문을 get과 비교 연산자로 교체했다.
+    // 시간 복잡도 O(N)
 
     // map에 [글자, 인덱스] 쌍을 계속 기록해 나감.
     // map에 key로서 이미 있는 글자 만나면, 
@@ -13,15 +15,13 @@ var lengthOfLongestSubstring = function(s) {
 
     let max = 0;
     let length = 0;
+    let prevStartIdx = -1;
 
     for (let i = 0; i < s.length; i++) {
-        if (charToIdx.has(s[i])) {
-            const prevIdx = charToIdx.get(s[i]);
-            length = i - prevIdx;
+        if (charToIdx.has(s[i]) && charToIdx.get(s[i]) >= prevStartIdx) {
+            prevStartIdx = charToIdx.get(s[i]);
+            length = i - prevStartIdx;
             charToIdx.set(s[i], i);
-            for (const [c, v] of charToIdx) {
-                if (v < prevIdx) charToIdx.delete(c);
-            }
         } else {
             length += 1;
             charToIdx.set(s[i], i);
